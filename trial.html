@@ -1,21 +1,16 @@
 <!DOCTYPE html>
-<html>
-<!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>D3 Graphic</title>
-  <link rel="stylesheet" href="/Users/biancabrown/Desktop/d3/_/base.css">
-  <link rel="stylesheet" href="/Users/biancabrown/Desktop/d3/style.css">
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/Biancabrown/finalproject/master/style.css">
 </head>
 <body>
   <div class="container">
     <h2>Bianca's Final Project</h2>
    <div id="chart"></div>
   </div>
-  <script src="/Users/biancabrown/Desktop/d3/_/d3.min.js"></script>
-  <script src="/Users/biancabrown/Desktop/d3/script.js"></script>
+  <script src="<script src="http://d3js.org/d3.v3.min.js"></script>"></script>
     <style>
       #chart {
         height: 60px;
@@ -24,16 +19,16 @@
         width: 200px;
       }
       .tooltip {
-        background: #eee;
-        box-shadow: 0 0 5px #999999;
-        color: #333;
+        background: #aaa;
+        box-shadow: 0 0 10px #999999;
+        color: #555;
         display: none;
         font-size: 12px;
-        left: -350px;
-        padding: 100px;
+        left: 100px;
+        padding: 90px;
         position: absolute;
         text-align: center;
-        top: 500px;
+        top: 700px;
         width: 80px;
         z-index: 10;
       }
@@ -60,9 +55,6 @@
      <script src="http://d3js.org/d3.v3.min.js"></script>
     <script>
 
-
-      
-
       (function(d3) {
         'use strict';
 
@@ -73,15 +65,22 @@
         var legendRectSize = 10;
         var legendSpacing = 4;
 
+        var xScale = d3.scale.linear().range([width, 0]);
+        var yScale = d3.scale.linear().range([0, height]);
+        var rScale = d3.scale.linear().range([width, height]);
         var color = d3.scale.category20b();
 
-        var svg = d3.select('#chart')
+        var svg = d3.select('body')
           .append('svg')
           .attr('width', 2000)
           .attr('height', 700)
           .append('g')
           .attr('transform', 'translate(' + (200) + 
             ',' + (300) + ')');
+
+        var xScale = d3.scale.linear().range([-1, 0]);
+        var yScale = d3.scale.linear().range([1000, 0]);
+        var color = d3.scale.category20b();
 
         var g = svg.append("g");
         var img = g.append("svg:image")
@@ -99,7 +98,7 @@
           .value(function(d) { return d.count; })
           .sort(null);
 
-        var tooltip = d3.select('#chart')
+        var tooltip = d3.select('body')
           .append('div')
           .attr('class', 'tooltip');
         
@@ -112,7 +111,7 @@
         tooltip.append('div')
           .attr('class', 'percent');
 
-        d3.csv('/Users/biancabrown/Desktop/bb1piechart.csv', function(error, dataset) {
+        d3.csv('https://raw.githubusercontent.com/Biancabrown/finalproject/master/bb1piechart.csv', function(error, dataset) {
           dataset.forEach(function(d) {
             d.count = +d.count;
             d.enabled = true;                                         // NEW
@@ -245,7 +244,7 @@
 
   <body>
     <h1>Bianca Jamaica Bay Microbiome Data</h1>             <!-- NEW -->
-    <div id="chart"></div>
+    <div id="body"></div>
      <script src="http://d3js.org/d3.v3.min.js"></script>
     <script>
       (function(d3) {
@@ -260,7 +259,7 @@
 
         var color = d3.scale.category20b();
 
-        var svg = d3.select('#chart')
+        var svg = d3.select('body')
           .append('svg')
           .attr('width', 1000)
           .attr('height', 1000)
@@ -276,7 +275,7 @@
           .value(function(d) { return d.count1; })
           .sort(null);
 
-        var tooltip = d3.select('#chart')
+        var tooltip = d3.select('body')
           .append('div')
           .attr('class', 'tooltip');
         
@@ -289,7 +288,7 @@
         tooltip.append('div')
           .attr('class', 'percent1');
 
-        d3.csv('/Users/biancabrown/Desktop/Hb.csv', function(error, dataset) {
+        d3.csv('https://raw.githubusercontent.com/Biancabrown/finalproject/master/Hb.csv', function(error, dataset) {
           dataset.forEach(function(d) {
             d.count1 = +d.count1;
             d.enabled = true;                                         // NEW
