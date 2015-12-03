@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <h2>Bianca Brown Final Project</h2>
+    <body>This data was collected as a part of the ther project "The effects of combined Sewage Overflow (CSO) on the Eutrophication and Bacterial Diversity of Jamaica Bay." It shows the shows the most abundant microbiome collected at each site. </body>
+    <style>
+      #chart {
+        height: 60px;
+        margin: 0 auto;                                               /* NEW */
+        position: relative;
+        width: 200px;
+      }
+      .tooltip {
+        background: #aaa;
+        box-shadow: 0 0 10px #999999;
+        color: #555;
+        display: none;
+        font-size: 12px;
+        left: 100px;
+        padding: 90px;
+        position: absolute;
+        text-align: center;
+        top: 700px;
+        width: 80px;
+        z-index: 10;
+      }
+      .legend {
+        font-size: 12px;
+      }
+      rect {
+        cursor: pointer;                                              /* NEW */
+        stroke-width: 2;
+      }
+      rect.disabled {                                                 /* NEW */
+        fill: transparent !important;                                 /* NEW */
+      }                                                               /* NEW */
+      h1 {                                                            /* NEW */
+        font-size: 14px;                                              /* NEW */
+        text-align: center;                                           /* NEW */
+      }                                                               /* NEW */
+    </style>
+       <div id="color1" class="BB">
+       <input name="Black Basin" 
+            type="button" 
+            value="Black Basin" 
+            onclick="updateData()" />
+        </div>
+
+      <div id="option" class="HT">
+       <input name="Hawtree" 
+              type="button" 
+              value="Hawtree" 
+              onclick="updateData()" />
+       </div>
+
+  <body>           <!-- NEW -->
+    <div id="chart"></div>
+     <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script>
+
+      (function(d3) {
+        'use strict';
+
+        var width = 300;
+        var height = 300;
+        var radius = Math.min(width, height) / 2;
+        var donutWidth = 100;
+        var legendRectSize = 10;
+        var legendSpacing = 4;
+
+
+        var color = d3.scale.category20b();
+
+        var svg = d3.select('body')
+          .append('svg')
+          .attr('width', 2000)
+          .attr('height', 700)
+          .append('g')
+          .attr('transform', 'translate(' + (200) + 
+            ',' + (300) + ')');
+
+
+        var color = d3.scale.category20b();
+
+        var g = svg.append("g");
+        var img = g.append("svg:image")
+          .attr("xlink:href", "https://raw.githubusercontent.com/Biancabrown/finalproject/master/Jamaica_bya.png")
+          .attr("width", 900)
+          .attr("height", 500)
+          .attr("x",  500)
+          .attr("y", -100);
+
+        var circle1 = svg.append("circle")
+                         .attr("cx", 1050)
+                         .attr("cy",100)
+                         .attr("r", 20)
+                         .style("fill", "red");
+        var circle2 = svg.append("circle")
+                         .attr("cx", 900)
+                         .attr("cy",100)
+                         .attr("r", 20)
+                         .style("fill", "purple")
+                         .on("click", function(){d3.select(this).style("fill", "white");})
+                         .on("mouseout", function(){d3.select
+                          (this).style("fill", "purple");});
+         
+
+        var arc = d3.svg.arc()
+          .innerRadius(radius - donutWidth)
+          .outerRadius(radius);
+
+        var pie = d3.layout.pie()
+          .value(function(d) { return d.count; })
+          .sort(null);
+
+        var tooltip = d3.select('body')
+          .append('div')
+          .attr('class', 'tooltip');
+        
+        tooltip.append('div')
+          .attr('class', 'label');
+
+        tooltip.append('div')
+          .attr('class', 'count');
+
+        tooltip.append('div')
+          .attr('class', 'percent');
+
+        d3.csv('https://raw.githubusercontent.com/Biancabrown/finalproject/master/bb1piechart.csv', function(error, dataset) {
+          dataset.forEach(function(d) {
+            d.count = +d.count;
+            d.enabled = true;                                         // NEW
+          });
+
+          var path = svg.selectAll('path')
+            .data(pie(dataset))
+            .enter()
+            .append('path')
+            .attr('d', arc)
+            .attr('fill', function(d, i) { 
+              return color(d.data.label); 
+            })                                                        // UPDATED (removed semicolon)
+            .each(function(d) { this._current = d; });                // NEW
+
+          path.on('mouseover', function(d) {
+            var total = d3.sum(dataset.map(function(d) {
+              return (d.enabled) ? d.count : 0;                       // UPDATED
+            }));
+            var percent = Math.round(1000 * d.data.count / total) / 10;
+            tooltip.select('.label').html(d.data.label);
+            tooltip.select('.count').html(d.data.count); 
+            tooltip.select('.percent').html(percent + '%'); 
+            tooltip.style('display', 'block');
+          });
+          
+          path.on('mouseout', function() {
+            tooltip.style('display', 'none');
+          });
+            
+          var legend = svg.selectAll('.legend')
+            .data(color.domain())
+            .enter()
+            .append('g')
+            .attr('class', 'legend')
+            .attr('transform', function(d, i) {
+              var height = legendRectSize + legendSpacing;
+              var offset =  height * color.domain().length / 2;
+              var horz = 300;
+              var vert = i * height - offset;
+              return 'translate(' + horz + ',' + vert + ')';
+            });
+
+          legend.append('rect')
+            .attr('width', legendRectSize)
+            .attr('height', legendRectSize)                                   
+            .style('fill', color)
+            .style('stroke', color)                                   // UPDATED (removed semicolon)
+            .on('click', function(label) {                            // NEW
+              var rect = d3.select(this);                             // NEW
+              var enabled = true;                                     // NEW
+              var totalEnabled = d3.sum(dataset.map(function(d) {    
+                return (d.enabled) ? 1 : 0;                        
+              }));                                         
+              
+              if (rect.attr('class') === 'disabled') {  
+                rect.attr('class', '');
+              } else {                                         
+                if (totalEnabled < 2) return;
+                rect.attr('class', 'disabled');
+                enabled = false;
+              } 
+
+              pie.value(function(d) {                                 
+                if (d.label === label) d.enabled = enabled;
+                return (d.enabled) ? d.count : 0;                     // NEW
+              });                                                     // NEW
+
+              path = path.data(pie(dataset));                         // NEW
+
+              path.transition()                                       // NEW
+                .duration(750)                                        // NEW
+                .attrTween('d', function(d) {                         // NEW
+                  var interpolate = d3.interpolate(this._current, d); // NEW
+                  this._current = interpolate(0);                     
+                  return function(t) {                                
+                    return arc(interpolate(t));               
+                  };                                           
+                });                                            
+            });                                                
+            
+          legend.append('text')
+            .attr('x', legendRectSize + legendSpacing)
+            .attr('y', legendRectSize - legendSpacing)
+            .text(function(d) { return d; });
+
+        });})(window.d3);
+
+          d3.select("button#color1.BB").on("click", function() { 
+
+            durac = 100;
+
+             svg.selectAll('path')
+            .transition().duration(durac).ease("cubic-in-out")
+            .attr('fill', "white")   
+            ;                                   
+
+
+          });
+    </script>
+    
