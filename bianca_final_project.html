@@ -1,34 +1,46 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Bianca Final Project</title>
-  <link rel="stylesheet" href="/Users/biancabrown/Desktop/D32/_/base.css">
-  <link rel="stylesheet" href="/Users/biancabrown/Desktop/D32/style.css">
+<style>
+body {
+    background-color: linen;
+}
+h1 {
+    color: maroon;
+    margin-left: 40px;
+}
+h2 {
+    color: red;
+    margin-left: 10px;
+} 
+h3 {
+    color: black;
+    margin-left: 10px;
+
+} 
+
+</style>
 </head>
 <body>
-  <div class="container">
-    <section id="chart"></section>
-  </div>
-  <script src="_/d3.min.js"></script>
-  <script src="script.js"></script>
+
+<h2>Microbial Community in Jamaica Bay</h2>
+
+<h3>This data was collected as a part of the ther project "The effects of combined Sewage Overflow (CSO) on the Eutrophication and Bacterial Diversity of Jamaica Bay." It shows the shows the most abundant microbiome collected at each site.</h3>
+
 </body>
 </html>
-    <h2>Bianca Brown Final Project</h2>
-    <body>This data was collected as a part of the ther project "The effects of combined Sewage Overflow (CSO) on the Eutrophication and Bacterial Diversity of Jamaica Bay." It shows the shows the most abundant microbiome collected at each site. </body>
     <style>
       #chart {
         height: 60px;
-        margin: 0 auto;                                               /* NEW */
+        margin: 0 auto;                                              
         position: relative;
         width: 200px;
       }
       .tooltip {
         background: #aaa;
         box-shadow: 0 0 10px #999999;
-        color: #555;
+        color: #0;
         display: none;
         font-size: 12px;
         left: 40px;
@@ -43,16 +55,16 @@
         font-size: 12px;
       }
       rect {
-        cursor: pointer;                                              /* NEW */
+        cursor: pointer;                                             
         stroke-width: 2;
       }
-      rect.disabled {                                                 /* NEW */
-        fill: transparent !important;                                 /* NEW */
-      }                                                               /* NEW */
-      h1 {                                                            /* NEW */
-        font-size: 14px;                                              /* NEW */
-        text-align: center;                                           /* NEW */
-      }                                                               /* NEW */
+      rect.disabled {                                                 
+        fill: transparent !important;                                 
+      }                                                               
+      h1 {                                                            
+        font-size: 14px;                                              
+        text-align: center;                                           
+      }                                                          
     </style>
   </head>
 
@@ -68,7 +80,7 @@
               value="Hawtree" />
        </div>
 
-  <body>           <!-- NEW -->
+  <body>          
     <div id="chart"></div>
      <script src="http://d3js.org/d3.v3.min.js"></script>
     <script>
@@ -101,7 +113,7 @@
         
         var g = svg.append("g");
         var img = g.append("svg:image")
-          .attr("xlink:href", "https://raw.githubusercontent.com/Biancabrown/finalproject/master/Jamaica_bya.png")
+          .attr("xlink:href", "https://raw.githubusercontent.com/Biancabrown/finalproject/master/Jamaica_bay.png")
           .attr("width", 900)
           .attr("height", 500)
           .attr("x",  250)
@@ -137,7 +149,7 @@
         d3.csv('https://raw.githubusercontent.com/Biancabrown/finalproject/master/bb1piechart.csv', function(error, dataset) {
           dataset.forEach(function(d) {
             d.count = +d.count;
-            d.enabled = true;                                         // NEW
+            d.enabled = true;                                         
           });
 
           var path = svg.selectAll('path')
@@ -147,12 +159,12 @@
             .attr('d', arc)
             .attr('fill', function(d, i) { 
               return color(d.data.label); 
-            })                                                        // UPDATED (removed semicolon)
-            .each(function(d) { this._current = d; });                // NEW
+            })                                                    
+            .each(function(d) { this._current = d; });             
 
           path.on('mouseover', function(d) {
             var total = d3.sum(dataset.map(function(d) {
-              return (d.enabled) ? d.count : 0;                       // UPDATED
+              return (d.enabled) ? d.count : 0;                      
             }));
             var percent = Math.round(1000 * d.data.count / total) / 10;
             tooltip.select('.label').html(d.data.label);
@@ -182,10 +194,10 @@
             .attr('width', legendRectSize)
             .attr('height', legendRectSize)                                   
             .style('fill', color)
-            .style('stroke', color)                                   // UPDATED (removed semicolon)
-            .on('click', function(label) {                            // NEW
-              var rect = d3.select(this);                             // NEW
-              var enabled = true;                                     // NEW
+            .style('stroke', color)                       
+            .on('click', function(label) {                       
+              var rect = d3.select(this);                     
+              var enabled = true;                               
               var totalEnabled = d3.sum(dataset.map(function(d) {    
                 return (d.enabled) ? 1 : 0;                        
               }));                                         
@@ -200,10 +212,9 @@
 
               pie.value(function(d) {                                 
                 if (d.label === label) d.enabled = enabled;
-                return (d.enabled) ? d.count : 0;                     // NEW
-              });                                                     // NEW
-
-              path = path.data(pie(dataset));                         // NEW
+                return (d.enabled) ? d.count : 0;                   
+              });                                             
+              path = path.data(pie(dataset));        
 
               path.transition()                                       // NEW
                 .duration(750)                                        // NEW
@@ -228,16 +239,6 @@
 
         });})(window.d3);
     </script>
-    <script>
-
-        d3.csv('https://raw.githubusercontent.com/Biancabrown/finalproject/master/bb1piechart.csv', function(error, dataset) {
-          dataset.forEach(function(d) {
-            d.count = +d.count;
-            d.enabled = true;                                         // NEW
-          });
-          svg
-
-
 
     <script>
     <div id="body"></div>
@@ -268,7 +269,7 @@
         
         var g = svg.append("g");
         var img = g.append("svg:image")
-          .attr("xlink:href", "https://raw.githubusercontent.com/Biancabrown/finalproject/master/Jamaica_bya.png")
+          .attr("xlink:href", "https://raw.githubusercontent.com/Biancabrown/finalproject/master/Jamaica_bay.png")
           .attr("width", 900)
           .attr("height", 500)
           .attr("x",  240)
@@ -306,7 +307,7 @@
         d3.csv('https://raw.githubusercontent.com/Biancabrown/finalproject/master/Hb.csv', function(error, dataset1) {
           dataset1.forEach(function(d) {
             d.count1 = +d.count1;
-            d.enabled = true;                                         // NEW
+            d.enabled = true;                                        
           });
 
           var path = svg.selectAll('path')
@@ -316,12 +317,12 @@
             .attr('d', arc)
             .attr('fill', function(d, i) { 
               return color(d.data.label1); 
-            })                                                        // UPDATED (removed semicolon)
-            .each(function(d) { this._current = d; });                // NEW
+            })                                                      
+            .each(function(d) { this._current = d; });       
 
           path.on('mouseover', function(d) {
             var total = d3.sum(dataset1.map(function(d) {
-              return (d.enabled) ? d.count1 : 0;                       // UPDATED
+              return (d.enabled) ? d.count1 : 0;    
             }));
             var percent1 = Math.round(1000 * d.data.count1 / total) / 10;
             tooltip.select('.label1').html(d.data.label1);
@@ -354,12 +355,12 @@
             .style('fill', color)
             .style('stroke', color)
 
-            .on('click', function(label1) {                            // NEW
-              var rect = d3.select(this);                             // NEW
-              var enabled = true;                                     // NEW
-              var totalEnabled = d3.sum(dataset1.map(function(d) {     // NEW
-                return (d.enabled) ? 1 : 0;                           // NEW
-              }));                                                    // NEW
+            .on('click', function(label1) {
+              var rect = d3.select(this); 
+              var enabled = true;               
+              var totalEnabled = d3.sum(dataset1.map(function(d) {     
+                return (d.enabled) ? 1 : 0;              
+              }));                                             
               
               if (rect.attr('class') === 'disabled') {
                 rect.attr('class', '');
@@ -374,18 +375,18 @@
                 return (d.enabled) ? d.count1 : 0;
               });                                              
 
-              path = path.data(pie(dataset1));                         // NEW
+              path = path.data(pie(dataset1));
 
-              path.transition()                                       // NEW
-                .duration(750)                                        // NEW
-                .attrTween('d', function(d) {                         // NEW
-                  var interpolate = d3.interpolate(this._current, d); // NEW
-                  this._current = interpolate(0);                     // NEW
-                  return function(t) {                                // NEW
-                    return arc(interpolate(t));                       // NEW
-                  };                                                  // NEW
-                });                                                   // NEW
-            });                                                       // NEW
+              path.transition()
+                .duration(750)
+                .attrTween('d', function(d) {
+                  var interpolate = d3.interpolate(this._current, d); 
+                  this._current = interpolate(0);
+                  return function(t) {
+                    return arc(interpolate(t));                  
+                  };                                                  
+                });                                                   
+            });                                               
             
           legend.append('text')
             .attr('x', legendRectSize + legendSpacing)
