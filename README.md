@@ -3,7 +3,7 @@
 ## Introduction
 The goal of this study was to investigate how nutrient concentrations affects microbial diversity, by assessing sites varying distances from Combine Sewers.
 The visualization and its associated materials such as the data can be viewed here: https://github.com/Biancabrown/finalproject .
-To view this project http://htmlpreview.github.io/?https://raw.githubusercontent.com/Biancabrown/finalproject/master/bianca_final_project.html.
+To view this project https://htmlpreview.github.io/?https://raw.githubusercontent.com/Biancabrown/finalproject/master/bianca_final_presentation.html.
 
 ## The data
 The data was collected as apart of one of my undergraduate works. Consequently, this means that it is unpublished. The raw data:
@@ -20,29 +20,23 @@ The shortcoming of these paper, and with alot of microbial sequencing papers, is
 ## Microbial Community associated with Jamaica Bay
 
 ### Mapping of data to aesthetics
-
-How will aesthetic attributes ( X / Y / color / shape / size /texture / etc ) will be mapped to the data?
-
+The data is mapped to a pie chart. Clicking on the pie chart shows the percentages, and by clicking on the legend you can change the microbial community composition. 
 ### Filtering
 
-Are data filtered? ie in some views are some data not mapped to particular attributes of the image? What is the goal of the filtering?
+Data filtering was done prior to mapping. I only used two sites that is associated with my data. Also I only used species of microbes with abudances over 500. 
 
 ### Extra ink
 
-Are there aesthetic attributes that are not mapped to the data? If so, what purpose do they serve ( redundancy for robustness / improve visual metaphor / but data in context / beauty / etc )?
-
-Are any data mapped to more than one aesthetic attribute? Why?
+The background colors area added for aestetics.
 
 ### Perspective
 
-In this project the reader is able to explore and compaare the different communities by 
+In this project the reader is able to explore and compaare the different communities by clicking buttons to choose the site of interest. They can also manipulate the compisition of the microbial community.
 
 ## Assessment
 
-Was the new visualization successful at providing insight that was not possible or more difficult with previous approaches?
+The visualization was extremely successfully in adding new perspective to the data. However, I was limited in the amount of data points I could have added to the pie chart. With that the data shown was manipulated. My future direction will be to figure out how better I can expand the data to include all my data points, and how to make a more interactive map. 
 
-What are the main limitations of new approach?
-
-What are future directions this could go in?
+Code Source : https://github.com/zeroviscosity/zeroviscosity
 
 
