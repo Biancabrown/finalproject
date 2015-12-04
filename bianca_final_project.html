@@ -1,156 +1,418 @@
 <!DOCTYPE html>
+    <html lang="en">
+    <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>D3: Removing values from a chart</title>
-      <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
-		<style type="text/css">
-			/* No style rules here yet */
-		</style>
-	</head>
-	<body>
-	
-		<p>Click on this text to remove a data value from the chart!</p>
-			
-		<script type="text/javascript">
-
-			//Width and height
-			var w = 600;
-			var h = 250;
-			
-			var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
-							11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
-			
-			var xScale = d3.scale.ordinal()
-							.domain(d3.range(dataset.length))
-							.rangeRoundBands([0, w], 0.05);
-
-			var yScale = d3.scale.linear()
-							.domain([0, d3.max(dataset)])
-							.range([0, h]);
-			
-			//Create SVG element
-			var svg = d3.select("body")
-						.append("svg")
-						.attr("width", w)
-						.attr("height", h);
-
-			//Create bars
-			svg.selectAll("rect")
-			   .data(dataset)
-			   .enter()
-			   .append("rect")
-			   .attr("x", function(d, i) {
-			   		return xScale(i);
-			   })
-			   .attr("y", function(d) {
-			   		return h - yScale(d);
-			   })
-			   .attr("width", xScale.rangeBand())
-			   .attr("height", function(d) {
-			   		return yScale(d);
-			   })
-			   .attr("fill", function(d) {
-					return "rgb(0, 0, " + (d * 10) + ")";
-			   });
-
-			//Create labels
-			svg.selectAll("text")
-			   .data(dataset)
-			   .enter()
-			   .append("text")
-			   .text(function(d) {
-			   		return d;
-			   })
-			   .attr("text-anchor", "middle")
-			   .attr("x", function(d, i) {
-			   		return xScale(i) + xScale.rangeBand() / 2;
-			   })
-			   .attr("y", function(d) {
-			   		return h - yScale(d) + 14;
-			   })
-			   .attr("font-family", "sans-serif")
-			   .attr("font-size", "11px")
-			   .attr("fill", "white");
-
-
-
-
-			//On click, update with new data			
-			d3.select("p")
-				.on("click", function() {
-
-					//Remove one value from dataset
-					dataset.shift();
-					
-					//Update scale domains
-					xScale.domain(d3.range(dataset.length));	//Recalibrate the x scale domain, given the new length of dataset
-					yScale.domain([0, d3.max(dataset)]);		//Recalibrate the y scale domain, given the new max value in dataset
-
-					//Select…
-					var bars = svg.selectAll("rect")			//Select all bars
-						.data(dataset);							//Re-bind data to existing bars, return the 'update' selection
-																//'bars' is now the update selection
-					
-					//Enter…
-					bars.enter()								//References the enter selection (a subset of the update selection)
-						.append("rect")							//Creates a new rect
-						.attr("x", w)							//Sets the initial x position of the rect beyond the far right edge of the SVG
-						.attr("y", function(d) {				//Sets the y value, based on the updated yScale
-							return h - yScale(d);
-						})
-						.attr("width", xScale.rangeBand())		//Sets the width value, based on the updated xScale
-						.attr("height", function(d) {			//Sets the height value, based on the updated yScale
-							return yScale(d);
-						})
-						.attr("fill", function(d) {				//Sets the fill value
-							return "rgb(0, 0, " + (d * 10) + ")";
-						});
-
-					//Update…
-					bars.transition()							//Initiate a transition on all elements in the update selection (all rects)
-						.duration(500)
-						.attr("x", function(d, i) {				//Set new x position, based on the updated xScale
-							return xScale(i);
-						})
-						.attr("y", function(d) {				//Set new y position, based on the updated yScale
-							return h - yScale(d);
-						})
-						.attr("width", xScale.rangeBand())		//Set new width value, based on the updated xScale
-						.attr("height", function(d) {			//Set new height value, based on the updated yScale
-							return yScale(d);
-						});
-
-					//Exit…
-					bars.exit()				//References the exit selection (a subset of the update selection)
-						.transition()		//Initiates a transition on the one element we're deleting
-						.duration(500)
-						.attr("x", w)		//Move past the right edge of the SVG
-						.remove();   		//Deletes this element from the DOM once transition is complete
-
-
-
-					//Update all labels
-					//
-					//Exercise: Modify this code to remove the correct label each time!
-					//
-					svg.selectAll("text")
-					   .data(dataset)
-					   .transition()
-					   .duration(500)
-					   .text(function(d) {
-					   		return d;
-					   })
-					   .attr("x", function(d, i) {
-							return xScale(i) + xScale.rangeBand() / 2;
-					   })
-					   .attr("y", function(d) {
-							return h - yScale(d) + 14;
-					   });
-
-				});
-
-			
-		</script>
-	</body>
+<head>
+  <meta charset="UTF-8">
+  <title>Bianca Final Project</title>
+  <link rel="stylesheet" href="/Users/biancabrown/Desktop/D32/_/base.css">
+  <link rel="stylesheet" href="/Users/biancabrown/Desktop/D32/style.css">
+</head>
+<body>
+  <div class="container">
+    <section id="chart"></section>
+  </div>
+  <script src="_/d3.min.js"></script>
+  <script src="script.js"></script>
+</body>
 </html>
+    <h2>Bianca Brown Final Project</h2>
+    <body>This data was collected as a part of the ther project "The effects of combined Sewage Overflow (CSO) on the Eutrophication and Bacterial Diversity of Jamaica Bay." It shows the shows the most abundant microbiome collected at each site. </body>
+    <style>
+      #chart {
+        height: 60px;
+        margin: 0 auto;                                               /* NEW */
+        position: relative;
+        width: 200px;
+      }
+      .tooltip {
+        background: #aaa;
+        box-shadow: 0 0 10px #999999;
+        color: #555;
+        display: none;
+        font-size: 12px;
+        left: 40px;
+        padding: 95px;
+        position: absolute;
+        text-align: center;
+        top: 520px;
+        width: 80px;
+        z-index: 10;
+      }
+      .legend {
+        font-size: 12px;
+      }
+      rect {
+        cursor: pointer;                                              /* NEW */
+        stroke-width: 2;
+      }
+      rect.disabled {                                                 /* NEW */
+        fill: transparent !important;                                 /* NEW */
+      }                                                               /* NEW */
+      h1 {                                                            /* NEW */
+        font-size: 14px;                                              /* NEW */
+        text-align: center;                                           /* NEW */
+      }                                                               /* NEW */
+    </style>
+  </head>
+
+       <div id="BB" class="BBclass">
+       <input name="BB" 
+            type="button" 
+            value="Black Basin"  />
+        </div>
+
+      <div id="HT" class="HTclass">
+       <input name="HT" 
+              type="button" 
+              value="Hawtree" />
+       </div>
+
+  <body>           <!-- NEW -->
+    <div id="chart"></div>
+     <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script>
+  
+
+      (function(d3) {
+        'use strict';
+
+        var width = 250;
+        var height = 300;
+        var radius = Math.min(width, height) / 2;
+        var donutWidth = 100;
+        var legendRectSize = 10;
+        var legendSpacing = 4;
+
+
+        var color = d3.scale.category20b();
+
+        var svg = d3.select('body')
+          .append('svg')
+          .attr('class','svg')
+          .attr('width', 2000)
+          .attr('height', 500)
+          .append('g')
+          .attr('transform', 'translate(' + (150) + 
+            ',' + (200) + ')');
+
+
+        var color = d3.scale.category20b();
+        
+        var g = svg.append("g");
+        var img = g.append("svg:image")
+          .attr("xlink:href", "https://raw.githubusercontent.com/Biancabrown/finalproject/master/Jamaica_bya.png")
+          .attr("width", 900)
+          .attr("height", 500)
+          .attr("x",  250)
+          .attr("y", -300);
+
+        var circle1 = svg.append("circle")
+                         .attr('class','circle1')
+                         .attr("cx", 820)
+                         .attr("cy",-70)
+                         .attr("r", 20)
+                         .style("fill", "red")
+        var arc = d3.svg.arc()
+          .innerRadius(radius - donutWidth)
+          .outerRadius(radius);
+
+        var pie = d3.layout.pie()
+          .value(function(d) { return d.count; })
+          .sort(null);
+
+        var tooltip = d3.select('body')
+          .append('div')
+          .attr('class', 'tooltip');
+        
+        tooltip.append('div')
+          .attr('class', 'label');
+
+        tooltip.append('div')
+          .attr('class', 'count');
+
+        tooltip.append('div')
+          .attr('class', 'percent');
+
+        d3.csv('https://raw.githubusercontent.com/Biancabrown/finalproject/master/bb1piechart.csv', function(error, dataset) {
+          dataset.forEach(function(d) {
+            d.count = +d.count;
+            d.enabled = true;                                         // NEW
+          });
+
+          var path = svg.selectAll('path')
+            .data(pie(dataset))
+            .enter()
+            .append('path')
+            .attr('d', arc)
+            .attr('fill', function(d, i) { 
+              return color(d.data.label); 
+            })                                                        // UPDATED (removed semicolon)
+            .each(function(d) { this._current = d; });                // NEW
+
+          path.on('mouseover', function(d) {
+            var total = d3.sum(dataset.map(function(d) {
+              return (d.enabled) ? d.count : 0;                       // UPDATED
+            }));
+            var percent = Math.round(1000 * d.data.count / total) / 10;
+            tooltip.select('.label').html(d.data.label);
+            tooltip.select('.count').html(d.data.count); 
+            tooltip.select('.percent').html(percent + '%'); 
+            tooltip.style('display', 'block');
+          });
+          
+          path.on('mouseout', function() {
+            tooltip.style('display', 'none');
+          });
+            
+          var legend = svg.selectAll('.legend')
+            .data(color.domain())
+            .enter()
+            .append('g')
+            .attr('class', 'legend')
+            .attr('transform', function(d, i) {
+              var height = legendRectSize + legendSpacing;
+              var offset =  height * color.domain().length / 2;
+              var horz = 170;
+              var vert = i * height - offset;
+              return 'translate(' + horz + ',' + vert + ')';
+            });
+
+          legend.append('rect')
+            .attr('width', legendRectSize)
+            .attr('height', legendRectSize)                                   
+            .style('fill', color)
+            .style('stroke', color)                                   // UPDATED (removed semicolon)
+            .on('click', function(label) {                            // NEW
+              var rect = d3.select(this);                             // NEW
+              var enabled = true;                                     // NEW
+              var totalEnabled = d3.sum(dataset.map(function(d) {    
+                return (d.enabled) ? 1 : 0;                        
+              }));                                         
+              
+              if (rect.attr('class') === 'disabled') {  
+                rect.attr('class', '');
+              } else {                                         
+                if (totalEnabled < 2) return;
+                rect.attr('class', 'disabled');
+                enabled = false;
+              } 
+
+              pie.value(function(d) {                                 
+                if (d.label === label) d.enabled = enabled;
+                return (d.enabled) ? d.count : 0;                     // NEW
+              });                                                     // NEW
+
+              path = path.data(pie(dataset));                         // NEW
+
+              path.transition()                                       // NEW
+                .duration(750)                                        // NEW
+                .attrTween('d', function(d) {                         // NEW
+                  var interpolate = d3.interpolate(this._current, d); // NEW
+                  this._current = interpolate(0);                     
+                  return function(t) {                                
+                    return arc(interpolate(t));               
+                  };                                           
+                });                                            
+            });                                                
+            
+          legend.append('text')
+            .attr('x', legendRectSize + legendSpacing)
+            .attr('y', legendRectSize - legendSpacing)
+            .text(function(d) { return d; });
+
+             d3.select("div.HTclass")
+             .on("click", function(){
+             d3.select('svg.svg').remove();
+      })
+
+        });})(window.d3);
+    </script>
+    <script>
+
+        d3.csv('https://raw.githubusercontent.com/Biancabrown/finalproject/master/bb1piechart.csv', function(error, dataset) {
+          dataset.forEach(function(d) {
+            d.count = +d.count;
+            d.enabled = true;                                         // NEW
+          });
+          svg
+
+
+
+    <script>
+    <div id="body"></div>
+     <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script>
+      (function(d3) {
+        'use strict';
+        
+        var width = 250;
+        var height = 300;
+        var radius = Math.min(width, height) / 2;
+        var donutWidth = 100;
+        var legendRectSize = 10;
+        var legendSpacing = 4;
+
+        var color = d3.scale.category20b();
+
+        var svg = d3.select('body')
+          .append('svg')
+          .attr('class', 'svg1')
+          .attr('width', 5000)
+          .attr('height', 4000)
+          .append('g')
+          .attr('transform', 'translate(' + (150) + 
+            ',' + (200) + ')');
+
+        var color = d3.scale.category20b();
+        
+        var g = svg.append("g");
+        var img = g.append("svg:image")
+          .attr("xlink:href", "https://raw.githubusercontent.com/Biancabrown/finalproject/master/Jamaica_bya.png")
+          .attr("width", 900)
+          .attr("height", 500)
+          .attr("x",  240)
+          .attr("y", -200);
+        var circle2 = svg.append("circle")
+                         .attr("cx", 630)
+                         .attr("cy",-10)
+                         .attr("r", 20)
+                         .style("fill", "purple")
+                         .on("click", function(){d3.select(this).style("fill", "white");})
+                         .on("mouseout", function(){d3.select
+                          (this).style("fill", "purple");});
+
+        var arc = d3.svg.arc()
+          .innerRadius(radius - donutWidth)
+          .outerRadius(radius);
+
+        var pie = d3.layout.pie()
+          .value(function(d) { return d.count1; })
+          .sort(null);
+
+        var tooltip = d3.select('body')
+          .append('div')
+          .attr('class', 'tooltip');
+        
+        tooltip.append('div')
+          .attr('class', 'label1');
+
+        tooltip.append('div')
+          .attr('class', 'count1');
+
+        tooltip.append('div')
+          .attr('class', 'percent1');
+
+        d3.csv('https://raw.githubusercontent.com/Biancabrown/finalproject/master/Hb.csv', function(error, dataset1) {
+          dataset1.forEach(function(d) {
+            d.count1 = +d.count1;
+            d.enabled = true;                                         // NEW
+          });
+
+          var path = svg.selectAll('path')
+            .data(pie(dataset1))
+            .enter()
+            .append('path')
+            .attr('d', arc)
+            .attr('fill', function(d, i) { 
+              return color(d.data.label1); 
+            })                                                        // UPDATED (removed semicolon)
+            .each(function(d) { this._current = d; });                // NEW
+
+          path.on('mouseover', function(d) {
+            var total = d3.sum(dataset1.map(function(d) {
+              return (d.enabled) ? d.count1 : 0;                       // UPDATED
+            }));
+            var percent1 = Math.round(1000 * d.data.count1 / total) / 10;
+            tooltip.select('.label1').html(d.data.label1);
+            tooltip.select('.count1').html(d.data.count1); 
+            tooltip.select('.percent1').html(percent1 + '%'); 
+            tooltip.style('display', 'block');
+          });
+          
+          path.on('mouseout', function() {
+            tooltip.style('display', 'none');
+          });
+
+            
+          var legend = svg.selectAll('.legend')
+            .data(color.domain())
+            .enter()
+            .append('g')
+            .attr('class', 'legend')
+            .attr('transform', function(d, i) {
+              var height = legendRectSize + legendSpacing;
+              var offset =  height * color.domain().length / 2;
+              var horz = 300;
+              var vert = i * height - offset;
+              return 'translate(' + 170 + ',' + vert + ')';
+            });
+
+          legend.append('rect')
+            .attr('width', legendRectSize)
+            .attr('height', legendRectSize)                                   
+            .style('fill', color)
+            .style('stroke', color)
+
+            .on('click', function(label1) {                            // NEW
+              var rect = d3.select(this);                             // NEW
+              var enabled = true;                                     // NEW
+              var totalEnabled = d3.sum(dataset1.map(function(d) {     // NEW
+                return (d.enabled) ? 1 : 0;                           // NEW
+              }));                                                    // NEW
+              
+              if (rect.attr('class') === 'disabled') {
+                rect.attr('class', '');
+              } else {                                           
+                if (totalEnabled < 2) return;
+                rect.attr('class', 'disabled');
+                enabled = false;                                     
+              }                                                
+
+              pie.value(function(d) {
+                if (d.label1 === label1) d.enabled = enabled;
+                return (d.enabled) ? d.count1 : 0;
+              });                                              
+
+              path = path.data(pie(dataset1));                         // NEW
+
+              path.transition()                                       // NEW
+                .duration(750)                                        // NEW
+                .attrTween('d', function(d) {                         // NEW
+                  var interpolate = d3.interpolate(this._current, d); // NEW
+                  this._current = interpolate(0);                     // NEW
+                  return function(t) {                                // NEW
+                    return arc(interpolate(t));                       // NEW
+                  };                                                  // NEW
+                });                                                   // NEW
+            });                                                       // NEW
+            
+          legend.append('text')
+            .attr('x', legendRectSize + legendSpacing)
+            .attr('y', legendRectSize - legendSpacing)
+            .text(function(d) { return d; });
+
+             d3.select("div.BBclass")
+             .on("click", function(){
+             d3.select('svg.svg1').remove();
+      })
+
+        });})(window.d3);
+             
+
+  
+
+    </script>
+    <script>
+
+
+
+    </script>
+
+  </body>
+
+    
+    </script>
+ 
+<head>
+ 
