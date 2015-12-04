@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>D3 Graphic</title>
+  <link rel="stylesheet" href="/Users/biancabrown/Desktop/d3/_/base.css">
+  <link rel="stylesheet" href="/Users/biancabrown/Desktop/d3/finalproject/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Bianca's Final Project</h2>
+   <div id="chart"></div>
+  </div>
+ <script src="http://d3js.org/d3.v3.min.js"></script></script>
+   <script src="http://d3js.org/d3.v3.min.js"></script>>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>D3 Example</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <style>
+      circle {
+        fill: none;
+        stroke-width: 2px;
+      }
+    </style>  
+
+  </head>
+  <body>
+    <script>
+
+      var outerWidth = 500;
+      var outerHeight = 500;
+      var rMin = 50; // "r" stands for radius
+      var rMax = 50;
+      var xColumn = "Unique";
+      var yColumn = "Number";
+      var rColumn = "Unique";
+      var colorColumn = "Species";
+
+      var svg = d3.select("body").append("svg")
+        .attr("width", outerWidth)
+        .attr("height", outerHeight);
+
+
+      var xScale = d3.scale.linear().range([outerWidth, 0]);
+      var yScale = d3.scale.linear().range([outerHeight, 0]);
+      var rScale = d3.scale.linear().range([rMin, rMax]);
+      var colorScale = d3.scale.category10();
+
+
+
+      function render(data){
+        xScale.domain(d3.extent(data, function (d){ return d[xColumn]; }));
+        yScale.domain(d3.extent(data, function (d){ return d[yColumn]; }));
+        rScale.domain(d3.extent(data, function (d){ return d[rColumn]; }));
+
+        var circles = svg.selectAll("circle").data(data);
+        circles.enter().append("circle");
+        circles
+          .attr("cx",      function (d){ return     xScale(d[xColumn]);     })
+          .attr("cy",      function (d){ return     yScale(d[yColumn]);     })
+          .attr("r",       function (d){ return     rScale(d[rColumn]);     })
+          .attr("stroke",  function (d){ return colorScale(d[colorColumn]); });
+
+        circles.exit().remove();
+      }
+
+      function type(d){
+        d.Unique = +d.Unique;
+        d.Number  = +d.Number;
+        d.Number = +d.Number;
+        return d;
+      }
+     var xAxis = d3.svg.axis()
+         .scale(xScale)
+         .orient("bottom");
+    svg.append("g")
+         .call(d3.svg.axis()
+         .scale(xScale)
+         .orient("bottom"));
+
+
+      d3.csv("/Users/biancabrown/Desktop/bb1_update.csv", type, render);
+
+    </script>
+  </body>
+</html>
+</html>
