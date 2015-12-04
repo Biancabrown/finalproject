@@ -216,10 +216,10 @@ h3 {
               });                                             
               path = path.data(pie(dataset));        
 
-              path.transition()                                       // NEW
-                .duration(750)                                        // NEW
-                .attrTween('d', function(d) {                         // NEW
-                  var interpolate = d3.interpolate(this._current, d); // NEW
+              path.transition()                                       
+                .duration(750)                                       
+                .attrTween('d', function(d) {                        
+                  var interpolate = d3.interpolate(this._current, d); 
                   this._current = interpolate(0);                     
                   return function(t) {                                
                     return arc(interpolate(t));               
