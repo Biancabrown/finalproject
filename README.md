@@ -7,7 +7,8 @@ This repository is a stub for your final project. Fork it as a template for your
 Expand on the readme questions below to provide an overview of the goals, background, and challenges for the final project. You can delete the questions as you write text that answers them, or leave the prompts in place. You can also delete this instruction section of you like.
 
 ## Introduction
-
+The goal of this study was to investigate how nutrient concentrations are affecting microbial diversity, by assessing sites varying distances from Combine Sewers.
+The visualization associated with the projec can be viewed here: 
 This is a final project for the [Interacting with Data](https://github.com/Brown-BIOL2430-S04-Fall2015/syllabus) seminar in fall 2015. This project (a very brief, ie 1-2 sentence, overview of the project)...
 
 To view this project, ... (embed visualization here or provide instructions on how to view the project).
