@@ -6,10 +6,7 @@
 body {
     background-color: linen;
 }
-h1 {
-    color: maroon;
-    margin-left: 40px;
-}
+
 h2 {
     color: red;
     margin-left: 10px;
@@ -24,9 +21,7 @@ h3 {
 </head>
 <body>
 
-<h2>Microbial Community in Jamaica Bay</h2>
-
-<h3>This data was collected as a part of the ther project "The effects of combined Sewage Overflow (CSO) on the Eutrophication and Bacterial Diversity of Jamaica Bay." It shows the shows the most abundant microbiome collected at each site.</h3>
+<h2>The effects of combined Sewage Overflow (CSO) on Bacterial Diversity of Jamaica Bay </h2>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,24 +57,96 @@ h3 {
 
 
 <body>
-<p><font face='Times'>By Bianca Brown</font> </p>
 
-<h2>1. Original Visualiation - Multiple Grpahs required to explore the data properly</h2>
+<h3>Example of Microbial Visualizations</h3>
 
-<img src="https://rawgit.com/Jcbnunez/finalproject/master/Parametrized_pi_graph.png" alt="Original Visualization" style="width:700px;height:600px;">
-
-
-<h2>2. Solution ------> Interactivity</h2>
-
-Unifies all graphs into a sinlge tool the user can explore, also allows for the addition of extra -informative- data.
-
-<h2>2.1. Elements: Static Map</h2>
-
-<img src="https://rawgit.com/Jcbnunez/finalproject/master/NBH_Sites_Map4.png" alt="The Map" style="width:700px;height:300px;">
+<img src="https://raw.githubusercontent.com/Biancabrown/finalproject/master/Undergrad.png" style="width:500px;height:500px;"> 
+<img src="https://raw.githubusercontent.com/Biancabrown/finalproject/master/Paper.png" style="width:500px;height:500px;">
 
 
+<h3>Failed Attempt</h3>
 
-<h2>2.2. Interactive data of Microbial Communities </h2>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>D3 Example</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <style>
+      circle {
+        fill: none;
+        stroke-width: 2px;
+      }
+    </style>  
+
+  </head>
+  <body>
+    <script>
+
+      var outerWidth = 500;
+      var outerHeight = 500;
+      var rMin = 50; // "r" stands for radius
+      var rMax = 50;
+      var xColumn = "Unique";
+      var yColumn = "Number";
+      var rColumn = "Unique";
+      var colorColumn = "Species";
+
+      var svg = d3.select("body").append("svg")
+        .attr("width", outerWidth)
+        .attr("height", outerHeight);
+
+
+      var xScale = d3.scale.linear().range([outerWidth, 0]);
+      var yScale = d3.scale.linear().range([outerHeight, 0]);
+      var rScale = d3.scale.linear().range([rMin, rMax]);
+      var colorScale = d3.scale.category10();
+
+
+
+      function render(data){
+        xScale.domain(d3.extent(data, function (d){ return d[xColumn]; }));
+        yScale.domain(d3.extent(data, function (d){ return d[yColumn]; }));
+        rScale.domain(d3.extent(data, function (d){ return d[rColumn]; }));
+
+        var circles = svg.selectAll("circle").data(data);
+        circles.enter().append("circle");
+        circles
+          .attr("cx",      function (d){ return     xScale(d[xColumn]);     })
+          .attr("cy",      function (d){ return     yScale(d[yColumn]);     })
+          .attr("r",       function (d){ return     rScale(d[rColumn]);     })
+          .attr("stroke",  function (d){ return colorScale(d[colorColumn]); });
+
+        circles.exit().remove();
+      }
+
+      function type(d){
+        d.Unique = +d.Unique;
+        d.Number  = +d.Number;
+        d.Number = +d.Number;
+        return d;
+      }
+     var xAxis = d3.svg.axis()
+         .scale(xScale)
+         .orient("bottom");
+    svg.append("g")
+         .call(d3.svg.axis()
+         .scale(xScale)
+         .orient("bottom"));
+
+
+      d3.csv("https://raw.githubusercontent.com/Biancabrown/finalproject/master/bb1_update.csv", type, render);
+
+    </script>
+  </body>
+</html>
+
+<h3>Skater Boards are Better than Car Parts</h3>
+
+<img style="float:right; margin-right:800px; padding-right:0px;" src="https://fastmonkeys.files.wordpress.com/2014/06/how-to-build-a-minimum-viable-product.jpg?w=500&h=421" width="500" height="500" alt="" title="" border="0" align="" />
+
+</scrpt>
+
+<h3>Interactive data of Microbial Communities </h3>
 
 </body>
 </html>
@@ -93,10 +160,10 @@ Unifies all graphs into a sinlge tool the user can explore, also allows for the 
       .tooltip {
         background: #aaa;
         box-shadow: 0 0 10px #999999;
-        color: #0;
+        color: #555;
         display: none;
         font-size: 12px;
-        left: 40px;
+        left: 500px;
         padding: 95px;
         position: absolute;
         text-align: center;
