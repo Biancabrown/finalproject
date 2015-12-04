@@ -1,29 +1,23 @@
-# Final Project
-
-## Instructions
-
-This repository is a stub for your final project. Fork it as a template for your project, and develop your code in the forked repository. For details on how to fork and turn in the project, see section 3 of the github education  [documentation](https://education.github.com/guide/forks). After you fork the repository, please enable the issue tracker in the repository settings so that others in the class (including the professor) can provide feedback.
-
-Expand on the readme questions below to provide an overview of the goals, background, and challenges for the final project. You can delete the questions as you write text that answers them, or leave the prompts in place. You can also delete this instruction section of you like.
+# Bianca Brown's Final Project
 
 ## Introduction
-The goal of this study was to investigate how nutrient concentrations are affecting microbial diversity, by assessing sites varying distances from Combine Sewers.
+The goal of this study was to investigate how nutrient concentrations affects microbial diversity, by assessing sites varying distances from Combine Sewers.
 The visualization and its associated materials such as the data can be viewed here: https://github.com/Biancabrown/finalproject .
-To view this project, ... (embed visualization here or provide instructions on how to view the project).
+To view this project http://htmlpreview.github.io/?https://raw.githubusercontent.com/Biancabrown/finalproject/master/bianca_final_project.html.
 
 ## The data
-The data was collected as apart of one of my undergraduate works. Consequently, that means that it is unpublished. The raw data
-
-- Data source (simulated/ published/ unpublished?)
-- Data structure - what are the variables? How are they organized? What states can they have
+The data was collected as apart of one of my undergraduate works. Consequently, this means that it is unpublished. The raw data:
+structured data
+The raw data consits of all the microbe communities that were seqeunced at each of our collection. In total, that resulted in over 500,000 individual micobes. The pipeline used for the analysis presented this data in txt with the site name, species name, and abundance of each species.
+The data used for the visualization was only for two sites Black Basin and Hawtree. 
 
 ## Background
+In a field where there is so much potential for dynamic data visualization, it is lacking. There are several examples of static microbial data presentations.The following are from two of my favorite microbial community papers. 
+First Paper
 
-Examples of previous visualizations of similar data or processes, if any exist... Include links or add images to markdown document... how were data mapped to aesthetics in these previous approaches? Was there filtering?
+The shortcoming of these paper, and with alot of microbial sequencing papers, is that the authors attempt to show majority of thier data. The readers are inundated with data, that they have parse out independently. The authors attempt to make that experience easier by guiding the readers to important parts of the data, however, these study usually consits of a mutlitude of graphs, charts and comparisons that can easily confuse the reader. 
 
-Shortcomings of previous approaches, or potentially interesting gaps between previous approaches...
-
-## This project
+## Microbial Community associated with Jamaica Bay
 
 ### Mapping of data to aesthetics
 
@@ -39,13 +33,9 @@ Are there aesthetic attributes that are not mapped to the data? If so, what purp
 
 Are any data mapped to more than one aesthetic attribute? Why?
 
-### Motion
-
-If motion is used, what purpose does it serve ( metaphor (eg representing motion in real world) / transition continuity between views / etc )
-
 ### Perspective
 
-To what extent is perspective (eg mappings) controlled by users vs hard coded in advance? How does this project aid in exploration vs exposition?
+In this project the reader is able to explore and compaare the different communities by 
 
 ## Assessment
 
